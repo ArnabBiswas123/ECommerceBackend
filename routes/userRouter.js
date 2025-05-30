@@ -11,7 +11,7 @@ const login = require('../controllers/login')
 const { addProduct, updateProduct, deleteProduct, getAllProducts } = require("../controllers/product");
 const express = require("express");
 const stripePayment = require("../controllers/stripePayment");
-const stripeWebhookController = require("../controllers/stripeWebhookController");
+// const stripeWebhookController = require("../controllers/stripeWebhookController");
 const router = express.Router();
 router.post('/signup', signup)
 router.post('/login', login)
@@ -21,7 +21,7 @@ router.delete('/deleteproduct/:id', protect, deleteProduct)
 router.get('/getallproduct', protect, getAllProducts)
 router.get('/getallproducts',  getAllProducts)
 router.post('/create-checkout-session',  stripePayment)
-router.post('/webhook', express.raw({ type: 'application/json' }), stripeWebhookController)
+// router.post('/webhook', express.raw({ type: 'application/json' }), stripeWebhookController)
 
 
 module.exports = router;
