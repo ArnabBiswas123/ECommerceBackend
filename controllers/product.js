@@ -64,6 +64,15 @@ const getAllProducts = async (req, res) => {
     return res.json({ success: false, msg: "internal server error is there" })
   }
 };
+const getAllProduct = async (req, res) => {
+  try {
+    const products = await Product.find({ countInStock: { $gt: 0 } });;
+    return res.json({ success: true, data: products });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, msg: "internal server error is there" })
+  }
+};
 
 const getProductById = async (req, res, next) => {
   try {
@@ -149,6 +158,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   addProduct,
+  getAllProduct,
   getAllProducts,
   getProductById,
   updateProduct,

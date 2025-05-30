@@ -26,7 +26,16 @@ const stripeWebhookController = async (req, res) => {
       const totalAmount = session.amount_total / 100;
 
      
-      await Product.findByIdAndUpdate(productId, { $inc: { quantity: -1 } });
+      const updated = await Product.findOneAndUpdate(
+        { _id: productId, countInStock: { $gt: 0 } },
+        { $inc: { countInStock: -1 } },
+        { new: true }
+      );
+  
+      if (!updated) {
+        console.warn(`⚠️  Product ${productId} is out of stock`);
+        // You could choose to refund here or alert your team
+      }
 
      
       const order = new Order({
